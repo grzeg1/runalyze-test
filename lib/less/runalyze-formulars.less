@@ -1,0 +1,195 @@
+@formular-input-font-size:			.9em;
+@formular-input-background:			rgba(255,255,255,.7);
+@formular-input-background-focus:	#ebfdd7;
+@formular-input-border-color:		#b8b8b8;
+@formular-input-border-radius:		3px;
+@formular-input-margin:				4px 2px;
+@formular-input-padding:			2px;
+@formular-legend-color:				#8ab858;
+@formular-legend-border:			#ddd;
+@formular-invalid-background:		#fdebd7;
+@formular-invalid-border:			#c00;
+
+
+
+
+
+input, select, textarea, code {
+	font-size: @formular-input-font-size;
+	margin: @formular-input-margin;
+	background-color: @formular-input-background;
+	border: 1px solid @formular-input-border-color;
+	border-radius: @formular-input-border-radius;
+}
+
+input, textarea, code {
+	padding: @formular-input-padding;
+}
+
+select {
+	padding: 1px;
+}
+
+.as-input {
+	display: inline-block;
+	font-size: @formular-input-font-size;
+	padding: (@formular-input-padding + 1px);
+}
+
+table input, table select, table textarea {
+	margin: 0 2px;
+}
+
+input:focus, select:focus, textarea:focus {
+	background-color: @formular-input-background-focus;
+}
+
+input[type=checkbox] {
+	position: relative;
+	top: 2px;
+	border: none;
+}
+
+label.checkable,
+input[type=checkbox] {
+	cursor: pointer;
+}
+
+input[type=submit], .button {
+	background-color: #555;
+	border: 0;
+	border-radius: 0;
+	color: #FFF !important;
+	cursor: pointer;
+	padding: 5px 12px !important;
+}
+
+.button {
+	display: block;
+	text-align: center;
+	width: 127px;
+	margin: 0 auto;
+}
+
+fieldset {
+	border-top: 1px solid @formular-legend-border;
+	padding-top: 6px;
+	padding-bottom: 10px;
+	clear: both;
+
+	&.collapsed div, &.collapsed > input {
+		display: none !important;
+	}
+
+	&.without-legend {
+		border-top: none;
+	}
+
+	legend {
+		cursor: pointer;
+		color: @formular-legend-color;
+		padding-right: 3px;
+		margin-left: 6px;
+
+		&:before {
+			display: inline-block;
+			font-family: FontAwesome;
+			-webkit-font-smoothing: antialiased;
+			line-height: 1;
+			content: "\f0d7";
+			width: 12px;
+			text-align: center;
+			color: @font-color;
+		}
+	}
+
+	&.collapsed legend {
+		&:before {
+			content: "\f0da";
+		}
+	}
+
+	label {
+		font-weight: bold;
+		width: 45%;
+		float: left;
+		margin: 0 !important;
+		padding: 3px 0;
+	}
+
+	.toolbar-line label {
+		float: none;
+		width: auto;
+		font-weight: normal;
+	}
+
+	.inline label {
+		float: none;
+		width: auto;
+		padding: 3px;
+	}
+
+	.w25, .w33, .w50, .w100 {
+		padding: 2px 0;
+		min-height: 19px;
+	}
+
+	.w25, .w33, .w50 {
+		float: left;
+		display: block;
+	}
+
+	.w100 {
+		clear: left;
+	}
+
+	.double-height-right {
+		float: right;
+		padding: 11px 0;
+		min-height: 19px;
+	}
+
+	textarea, input { padding: 2px; margin: 0; }
+	select { padding: 1px; margin: 0; }
+	.small-size { width: 60px; }
+	.middle-size { width: 120px; }
+	.full-size { width: 53%; }
+	.fullwidth { width: 95%; }
+	.with50erLabel label { width: 22.5%; }
+	.with50erLabel .full-size { width: 75%; }
+	.with50erLabel .inline label { float: none; }
+	.with33erLabel label { width: 14.85%; }
+	.with33erLabel .full-size { width: 85%; }
+	.w50.with33erLabel label { width: 29.7%; }
+	.w50.with33erLabel .full-size { width: 65%; }
+	.with33erLabel .inline label { float: none; }
+	textarea.full-size { height: 72px; }
+}
+
+.input-with-unit {
+	position: relative;
+
+	input { padding: 2px 30px 2px 0; text-align: right; }
+	.small-size { width: 34px; }
+	.middle-size { width: 94px; }
+	.small-size.pick-a-date { width: 60px; }
+
+	.input-unit {
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 30px;
+		display: block;
+		text-align: center;
+		float: none;
+		font-weight: normal;
+		font-size: 0.9em;
+		color: #ccc;
+		padding: 0;
+	}
+}
+
+:invalid, fieldset .validation-failed {
+	background-color: @formular-invalid-background;
+	border-color: @formular-invalid-border;
+}

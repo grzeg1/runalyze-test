@@ -1,0 +1,106 @@
+@installer-font-size:			12px;
+
+#installer {
+	font-size: @installer-font-size;
+
+	#headline {
+		z-index: @z-index-headline;
+	}
+
+	label strong {
+		display: block;
+		float: left;
+		width: 120px;
+		margin: 4px 2px;
+		padding: 2px;
+	}
+}
+
+#login-window {
+	margin: 0 auto;
+
+	p {
+		margin: 1em 0;
+	}
+
+	input.with-unit {
+		padding-left: 2px;
+		text-align: left;
+	}
+}
+
+#login-panel {
+	position: absolute;
+	top: 40px;
+	right: 20px;
+	width: 170px;
+	border-left: 1px solid #DDD;
+	font-size: .9em;
+
+	a {
+		display: block;
+		line-height: 24px;
+		margin-left: 4px;
+		padding: 2px;
+		border-bottom: none !important;
+		background-position: 3px center;
+		background-repeat: no-repeat;
+
+		&:hover {
+			background-color: rgba(255,255,255,.5);
+		}
+	}
+}
+
+.installer-window-container {
+	padding: 0 70px;
+}
+
+.installer-footer-text {
+	border-top: 1px solid #ccc;
+	margin: 20px 5px 2px;
+	padding-top: 10px;
+}
+
+.installer-footer-links {
+	border-top: 1px solid #ccc;
+	margin-top: 20px;
+	padding-top: 10px;
+}
+
+.text-badge {
+	width: 33%;
+	float: left;
+	position: relative;
+
+	strong {
+		display: block;
+		margin-bottom: 5px;
+		text-transform: uppercase;
+		font-weight: bold;
+		color: #000;
+	}
+
+	p {
+		margin: 0 10px 0 45px;
+		color: #666;
+	}
+
+	i {
+		position: absolute;
+		width: 45px;
+		top: 10px;
+		text-align: center;
+		color: @red;
+	}
+}
+
+code, textarea.code {
+	width: 98%;
+	margin: 0 auto;
+	height: 100px;
+	overflow: scroll;
+	display: block;
+	white-space: nowrap;
+	font-family: monospace;
+}

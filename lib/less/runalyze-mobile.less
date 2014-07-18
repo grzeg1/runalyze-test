@@ -1,0 +1,179 @@
+@media (max-width: 1024px) {
+	body#home, body#shared {
+		min-width: 320px;
+	}
+
+	#container {
+		min-width: 320px;
+		padding-right: 0;
+	}
+
+	#panels {
+		position: static;
+		max-width: 344px;
+		margin: 0 auto;
+	}
+
+	#data-browser-inner h1 {
+		text-align: center;
+
+		span.right {
+			float: none;
+			display: block;
+		}
+	}
+
+	#data-browser-calendar {
+		width: auto;
+	}
+
+	#widget-calendar {
+		overflow: scroll;
+		width: auto;
+	}
+
+	#data-browser, #statistics-inner {
+		overflow: hidden;
+	}
+
+	#data-browser-container,
+	#statistics-container {
+		overflow: scroll;
+	}
+
+	table, tr, td {
+		white-space: nowrap;
+	}
+
+	#training-table td {
+		white-space: normal;
+	}
+
+	#statistics-inner {
+		clear: both;
+
+		> ul.jbar {
+			position: static;
+			float: none;
+			margin: 0 auto 5px;
+
+			li, .right {
+				float: none;
+			}
+		}
+	}
+
+	#ajax {
+		overflow: scroll;
+	}
+
+	#close {
+		top: 0;
+		right: 0;
+	}
+}
+
+@media (max-width: 600px) {
+	body {
+		padding-top: 77px;
+	}
+
+	#headline {
+		.tab { margin: 0 12px; }
+		.logo { margin: 0 25px; }
+	}
+
+	#ajax, #ajax.small-window, #ajax.big-window {
+		position: fixed;
+		left: 0;
+		top: 0;
+		margin: 0 !important;
+		width: 100%;
+		height: 100%;
+		overflow: scroll;
+	}
+
+	#ajax fieldset .w25,
+	#ajax fieldset .w33,
+	#ajax fieldset .w50,
+	#ajax fieldset .w100 {
+		clear: both;
+		float: none;
+		width: 100%;
+	}
+
+	#ajax iframe {
+		max-width: 100%;
+	}
+
+	.toolbar-content span.right {
+		float: none;
+		display: block;
+		margin: 3px 0;
+	}
+
+	.databox {
+		float: none !important;
+		margin: 5px 0;
+		width: 100% !important;
+		width: calc(100% - 8px) !important;
+	}
+
+	.map {
+		min-width: 0;
+	}
+
+	.flot, .flot canvas, .flot-changeable {
+		width: 100% !important;
+		max-width: 100% !important;
+	}
+
+	#installer #copy {
+		display: none;
+	}
+
+	.installer-window-container {
+		padding: 0;
+	}
+
+	#installer .w50 {
+		width: 100%;
+	}
+
+	#installer fieldset label {
+		float: none;
+		width: 100%;
+	}
+
+	#installer fieldset input {
+		float: none;
+		width: 90%;
+		margin-bottom: 1em;
+	}
+
+	#login-panel {
+		position: static;
+		border-top: 1px solid #DDD;
+		border-left: none;
+		width: 100%;
+		top: 0;
+		left: 0;
+		margin: 2em 0;
+	}
+
+	#login-panel a {
+		border-bottom: 1px solid #DDD !important;
+	}
+
+	.login-window-stats,
+	.installer-footer-links,
+	.installer-footer-text { display: none; }
+}
+
+@media (max-width: 340px) {
+	#panels {
+		position: static;
+		width: 320px;
+		margin: 0 auto;
+	}
+}
