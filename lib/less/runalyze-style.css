@@ -53,7 +53,7 @@
 body {
   font-weight: normal;
   font-size: 11px;
-  line-height: 1.4em;
+  line-height: 16px;
   font-family: Verdana, Arial, sans-serif;
   color: #333333;
   background-size: cover;
@@ -1182,7 +1182,7 @@ table {
 }
 tr,
 td {
-  padding: 2px 3px;
+  padding: 1px 3px 1px 3px;
   vertical-align: top;
 }
 thead th,
@@ -1853,16 +1853,24 @@ label:active .checkbox-icon {
   background-position: 0 0;
 }
 .sport-icon-radfahren {
-  background-position: -10px 0;
+    width: 16px;
+    height:16px;
+    background-image: url(../../img/bike.png);
 }
 .sport-icon-schwimmen {
-  background-position: -20px 0;
+    width: 16px;
+    height:16px;
+    background-image: url(../../img/swim.png);
 }
 .sport-icon-gymnastik {
-  background-position: -30px 0;
+    width: 16px;
+    height:16px;
+    background-image: url(../../img/gym.png);
 }
 .sport-icon-laufen {
-  background-position: 0 -10px;
+    width: 16px;
+    height:16px;
+    background-image: url(../../img/run.png);
 }
 .sport-icon-krafttraining {
   background-position: -10px -10px;

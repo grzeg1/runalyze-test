@@ -34,7 +34,7 @@ class TrainingPlotPacePulse extends TrainingPlot {
 	 */
 	protected function setKeyAndTitle() {
 		$this->key   = 'pacepulse';
-		$this->title = 'Pace/Herzfrequenz';
+		$this->title = __('Pace/Heartrate');
 	}
 
 	/**

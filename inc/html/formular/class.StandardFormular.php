@@ -12,12 +12,6 @@
  */
 class StandardFormular extends Formular {
 	/**
-	 * Array with submit strings for modes from enum
-	 * @var array 
-	 */
-	static public $SUBMIT_STRINGS = array('Bearbeiten', 'Eintragen');
-
-	/**
 	 * Enum: Submit mode - editing
 	 * @var int 
 	 */

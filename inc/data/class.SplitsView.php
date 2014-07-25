@@ -95,10 +95,10 @@ class SplitsView {
 		echo '<table class="small zebra-style zebra-blue">
 		<thead>
 			<tr class="c b">
-				<th>Distanz</th>
-				<th>Zeit</th>
-				<th>Pace</th>
-				<th>Diff.</th>
+				<th>'.__('Distance').'</th>
+				<th>'.__('Time').'</th>
+				<th>'.__('Pace').'</th>
+				<th>'.__('diff').'</th>
 			</tr>
 		</thead>
 		<tbody class="top-and-bottom-border">';
