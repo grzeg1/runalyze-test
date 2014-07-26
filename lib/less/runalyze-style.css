@@ -1010,7 +1010,7 @@ tr.ERROR td {
 .panel-menu ul .submenu li a,
 .panel-menu ul .submenu li span.link {
   display: block;
-  padding: 5px 7.5px;
+  padding: 5px 8px;
   margin: 0;
 }
 .small-head-navi {
@@ -1051,7 +1051,7 @@ tr.ERROR td {
   width: 100%;
 }
 #data-browser,
-statistics-containerr {
+#statistics-container {
   overflow: auto;
 }
 #statistics-nav {
@@ -1840,15 +1840,7 @@ label:active .checkbox-icon {
 .weather-icon.weather-7 {
   background-position: 0 -72px;
 }
-/* see SportFactory::getIconOptions() */
-[class^="sport-icon-"],
-[class*=" sport-icon-"] {
-  display: inline-block;
-  width: 10px;
-  height: 10px;
-  vertical-align: middle;
-  background-image: url(../../img/sports.gif);
-}
+
 .sport-icon-unknown {
   background-position: 0 0;
 }
@@ -4363,4 +4355,65 @@ td.datepickerDisabled a:hover {
   -ms-transform: rotate(45deg);
   -o-transform: rotate(45deg);
   transform: rotate(45deg);
+}
+
+@font-face {
+    font-family: 'maki-sport';
+    src: url('../maki-sport/font/maki-sport.eot?40023575');
+    src: url('../maki-sport/font/maki-sport.eot?40023575#iefix') format('embedded-opentype'),
+    url('../maki-sport/font/maki-sport.woff?40023575') format('woff'),
+    url('../maki-sport/font/maki-sport.ttf?40023575') format('truetype'),
+    url('../maki-sport/font/maki-sport.svg?40023575#maki-sport') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+/* Chrome hack: SVG is rendered more smooth in Windozze. 100% magic, uncomment if you need it. */
+/* Note, that will break hinting! In other OS-es font will be not as sharp as it could be */
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: 'maki-sport';
+    src: url('../font/maki-sport.svg?40023575#maki-sport') format('svg');
+  }
+}
+*/
+
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    font-family: "maki-sport";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    /* opacity: .8; */
+
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+
+    /* Animation center compensation - margins should be symmetric */
+    /* remove if not needed */
+    margin-left: .2em;
+
+    /* you can be more comfortable with increased icons size */
+    /* font-size: 120%; */
+
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+
+.icon-running:before { content: '\e800'; } /* '' */
+.icon-cycling:before { content: '\e801'; } /* '' */
+.icon-swimming:before { content: '\e802'; } /* '' */
+.icon-gymnastics:before { content: '\e803'; } /* '' */
+
+#data-browser-container .sport-icon{
+    font-size: 15px;
 }

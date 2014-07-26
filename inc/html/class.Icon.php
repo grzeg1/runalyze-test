@@ -88,7 +88,11 @@ class Icon {
 		if ($tooltip == '')
 			$tooltip = $title;
 
-		return Ajax::tooltip('<i class="sport-icon-'.str_replace('.gif', '', $data['img']).'"></i>', $tooltip);
+        $icons=array('Laufen'=>'running', 'Schwimmen'=>'swimming', 'Radfahren'=>'cycling', 'Gymnastik'=>'gymnastics');
+
+        $iconname=$icons[$data['name']];
+
+		return Ajax::tooltip('<i class="sport-icon icon-'.$iconname.'"></i>', $tooltip);
 	}
 
 	/**

@@ -1,0 +1,5 @@
+
+.icon-running:before { content: '\e800'; } /* '' */
+.icon-cycling:before { content: '\e801'; } /* '' */
+.icon-swimming:before { content: '\e802'; } /* '' */
+.icon-gymnastics:before { content: '\e803'; } /* '' */
