@@ -21,6 +21,7 @@ Changes include:
   - better scaling
   - tooltip includes time
   - fixed selection stats calculations
+  - pace shown as speed (5km/min 2x faster than 10km/min), smoothing
   - map cursor follows chart cursor
 - Some changes to map
   - disabled wheel scroll in main view
