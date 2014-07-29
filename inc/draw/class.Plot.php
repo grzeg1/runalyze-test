@@ -771,6 +771,7 @@ class Plot {
 
 		$this->Options['yaxes'][$axis-1]['min'] = $min;
 		$this->Options['yaxes'][$axis-1]['max'] = $max;
+
 	}
 
 	/**
@@ -781,6 +782,18 @@ class Plot {
 		$this->Options['yaxes'][$axis-1]['transform'] = 'function(v){return -v;}';
 		$this->Options['yaxes'][$axis-1]['inverseTransform'] = 'function(v){return -v;}';
 	}
+
+    /**
+     * Set y axis to reverse
+     * @param int $axis
+     */
+    public function setYAxisPaceReverse($axis) {
+        $this->Options['yaxes'][$axis-1]['transform'] = 'function(v){return 1/(v);}';
+        $this->Options['yaxes'][$axis-1]['inverseTransform'] = 'function(v){return 1/v;}';
+        $this->Options['yaxes'][$axis-1]['ticks']=[180000,240000,300000,360000,480000,600000,1200000];
+        $this->Options['yaxes'][$axis-1]['max'] = 12000000;
+    }
+
 
 	/**
 	 * Set all zero points to null 

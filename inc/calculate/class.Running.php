@@ -147,7 +147,7 @@ class Running {
 		if (CONF_PULS_MODE == 'hfres')
 			return Ajax::tooltip($hfr, $bpm);
 			
-		return Ajax::tooltip($bpm, $hf);
+		return Ajax::tooltip($bpm, $hfr);
 	}
 
 	/**

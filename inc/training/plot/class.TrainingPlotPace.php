@@ -61,17 +61,17 @@ class TrainingPlotPace extends TrainingPlot {
 			$Data = Plot::correctValuesForTime($Data);
 		}
 
-//        reset($Data);
-//        $k = key($Data);
-//        $v = current($Data);
-//        $buf=array($v,$v,$v);
-//        $lastk=$k;
-//        foreach ($Data as $k => $v){
-//            array_shift($buf);
-//            array_push($buf, $v);
-//            $Data[$lastk]=array_sum($buf)/3;
-//            $lastk=$k;
-//        }
+        reset($Data);
+        $k = key($Data);
+        $v = current($Data);
+        $buf=array($v,$v,$v);
+        $lastk=$k;
+        foreach ($Data as $k => $v){
+            array_shift($buf);
+            array_push($buf, $v);
+            $Data[$lastk]=array_sum($buf)/3;
+            $lastk=$k;
+        }
 
 		return $Data;
 	}
@@ -134,7 +134,7 @@ class TrainingPlotPace extends TrainingPlot {
 			}
 		}
 
-		if (CONF_PACE_Y_AXIS_REVERSE)
-			$Plot->setYAxisReverse($YAxis);
+//		if (CONF_PACE_Y_AXIS_REVERSE)
+			$Plot->setYAxisPaceReverse($YAxis);
 	}
 }
