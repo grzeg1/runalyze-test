@@ -134,7 +134,7 @@ class VDOTinfo {
 		$up   = $this->Training->hasArrayAltitude() ? $this->Training->getElevationUp() : $this->Training->getElevation();
 		$down = $this->Training->hasArrayAltitude() ? $this->Training->getElevationDown() : $this->Training->getElevation();
 
-		$additionalDistance = (int)CONF_VDOT_CORRECTION_POSITIVE_ELEVATION*$up + (int)CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION*$down;
+		$additionalDistance = JD::transformDistanceFromElevation($this->Training->getDistance(), $up, $down)-$this->Training->getDistance();
 		$newVDOT =  JD::Training2VDOTwithElevation(0, array(
 				'sportid'	=> CONF_RUNNINGSPORT,
 				'distance'	=> $this->Training->getDistance(),
@@ -164,7 +164,7 @@ class VDOTinfo {
 			</div>
 			<div class="w50">
 				<label>'.__('Influence').'</label>
-				<span class="as-input">'.Math::WithSign($additionalDistance).'m = '.Running::Km($this->Training->getDistance() + $additionalDistance/1000, 3).'</span>
+				<span class="as-input">'.Math::WithSign($additionalDistance*1000).'m = '.Running::Km($this->Training->getDistance() + $additionalDistance, 3).'</span>
 			</div>
 		');
 		$Fieldset->display();

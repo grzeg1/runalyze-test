@@ -205,7 +205,9 @@ class JD {
 	 * @return double
 	 */
 	public static function transformDistanceFromElevation($distance, $up, $down) {
-		return $distance + (int)CONF_VDOT_CORRECTION_POSITIVE_ELEVATION*$up/1000 + (int)CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION*$down/1000;
+        $adddistance=(CONF_VDOT_CORRECTION_POSITIVE_ELEVATION*$up/1000 + CONF_VDOT_CORRECTION_NEGATIVE_ELEVATION*$down/1000);
+        $incline=($up+$down)/($distance*1000);
+		return $distance + round(($adddistance*(1+10*$incline)),2);
 	}
 
 	/**
