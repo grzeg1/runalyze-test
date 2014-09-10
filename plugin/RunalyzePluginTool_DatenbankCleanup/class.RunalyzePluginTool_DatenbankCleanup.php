@@ -186,7 +186,7 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	 */
 	private function recalculateVDOTwithElevationWithoutGPSarray() {
 		$DB        = DB::getInstance();
-		$Trainings = $DB->query('SELECT `id`,`s`,`distance`,`elevation` FROM `'.PREFIX.'training` WHERE `elevation`>0')->fetchAll();
+		$Trainings = $DB->query('SELECT `id`,`s`,`distance`,`elevation` FROM `'.PREFIX.'training` WHERE `elevation`>0 AND `arr_alt`=""')->fetchAll();
 
 		foreach ($Trainings as $Training) {
 			$newVdot = JD::Training2VDOTwithElevation($Training['id'], $Training, $Training['elevation'], $Training['elevation']);
