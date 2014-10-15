@@ -218,7 +218,7 @@ class JD {
 	 * @param int $sportid [optional]
 	 * @return int
 	 */
-	private static function values2VDOT($distance, $s, $pulse_avg, $sportid = false) {
+	public static function values2VDOT($distance, $s, $pulse_avg, $sportid = false) {
 		if ($sportid === false)
 			$sportid = CONF_RUNNINGSPORT;
 

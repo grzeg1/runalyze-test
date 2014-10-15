@@ -104,6 +104,9 @@ class RoundsInfo {
 			$PaceDifferenceString     = SportFactory::getSpeedWithAppendixAndTooltip(1, abs($PaceDifferenceInSeconds), $this->Training->Sport()->id());
 			$PaceDifferenceFullString = '<span class="'.$PaceDifferenceClass.'">'.$PaceDifferenceSign.$PaceDifferenceString.'</span>';
 
+            $adjdist = JD::transformDistanceFromElevation($Round['km'], $Round['hm-up'], $Round['hm-down']);
+            $pseudovdot = JD::values2VDOT($adjdist, $Round['s'], $Round['heartrate']);
+
 			$this->Data[] = array(
 				'time'      => Time::toString($Round['time']),
 				'distance'  => Running::Km($Round['distance'], 2),
@@ -113,8 +116,11 @@ class RoundsInfo {
 				'pace'      => SportFactory::getSpeedWithAppendixAndTooltip($Round['km'], $Round['s'], $this->Training->Sport()->id()),
 				'pacediff'	=> $PaceDifferenceFullString,
 				'heartrate' => $showCellForHeartrate ? Helper::Unknown($Round['heartrate']) : '-',
-				'elevation' => $showCellForElevation ? Math::WithSign($Round['hm-up']).'/'.Math::WithSign(-$Round['hm-down']) : '-'
-			);
+				'elevation' => $showCellForElevation ? Math::WithSign($Round['hm-up']).'/'.Math::WithSign(-$Round['hm-down']) : '-',
+                'pseudovdot' => $pseudovdot
+
+
+        );
 		}
 	}
 
@@ -214,7 +220,8 @@ class RoundsInfo {
 			'pace'		=> __('Pace'),
 			'pacediff'	=> __('Diff'),
 			'heartrate'	=> __('&oslash; bpm'),
-			'elevation'	=> __('elev')
+            'elevation'	=> __('elev'),
+			'pseudovdot'	=> __('~vdot')
 		);
 
 		$Code  = '<table class="fullwidth zebra-style zebra-blue">';
