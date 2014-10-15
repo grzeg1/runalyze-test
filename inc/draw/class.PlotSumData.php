@@ -273,7 +273,18 @@ abstract class PlotSumData extends Plot {
 		if ($possibleKM > 0 && $this->Sport->id() == CONF_RUNNINGSPORT) {
 			$this->addThreshold('y', $possibleKM);
 			$this->addAnnotation(0, $possibleKM, __('Current level'));
-		}
+            $BasicEndurance = new BasicEndurance();
+            $BasicEndurance->readSettingsFromConfiguration();
+            $BEresults = $BasicEndurance->asArray();
+            $avgkm=($BEresults['weekkm-result'] / $BasicEndurance->getDaysForWeekKm() * 7);
+            if (stripos($timer, 'MONTH') !== false)
+                $avgkm=round($avgkm/7*30);
+            $this->addThreshold('y', $avgkm);
+            $this->addAnnotation(10, $avgkm, __('Average'));
+
+
+        }
+
 	}
 
 	/**
