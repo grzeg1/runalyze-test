@@ -458,7 +458,7 @@ class GpsData {
 	 * Are information for elevation available?
 	 */
 	public function hasTimeData() {
-		return !empty($this->arrayForTime) && max($this->arrayForTime) > 0;
+		return !empty($this->arrayForTime) && end($this->arrayForTime) > 0;
 	}
 
 	/**
@@ -881,61 +881,65 @@ class GpsData {
 		return $Zones;
 	}
 
-	public function getBestTimeFor($distance) {
+    public function getBestTimeFor($distance)
+    {
 
-		$this->startLoop();
-		$besttime=100000;
-		$j=0;
-		$epsilon=0.015;
-			
-		for ($i=0; $i<count($this->arrayForDistance); $i++) {
-			if (abs(($this->arrayForDistance[$i]-$this->arrayForDistance[$j])-$distance)<$epsilon*$distance){ //within km
-				$timediff=$this->arrayForTime[$i]-$this->arrayForTime[$j];
-				$distancediff=$this->arrayForDistance[$i]-$this->arrayForDistance[$j];
-				$adjtime=floor($timediff*$distance/$distancediff);
-				if ($adjtime<$besttime){
-					$besttime=$adjtime;
-			//if ($distance==10) echo ($this->arrayForDistance[$i]-$this->arrayForDistance[$j])." ".$j." ".$i." ".Time::toString($besttime)."<br/>";
-				}
-			} else
-			if ($this->arrayForDistance[$i]-$this->arrayForDistance[$j]>$distance*(1+$epsilon) ||
-                ($i==count($this->arrayForDistance) && $this->arrayForDistance[$i]-$this->arrayForDistance[$j]>=$distance*(1-$epsilon)))
-				{
-				 $j++;
-			         while ($this->arrayForDistance[$i]-$this->arrayForDistance[$j]>=$distance*(1-$epsilon))
-					$i--;
-				};
-		}
+        $this->startLoop();
+        $besttime = 100000;
+        $j = 0;
+        $epsilon = 50/1000; //m
+        $distarrsize = count($this->arrayForDistance);
 
-		return $besttime;
-	}
+        for ($i = 0; $i < $distarrsize; $i++) {
+            $distancediff = $this->arrayForDistance[$i] - $this->arrayForDistance[$j];
+            if (abs($distancediff - $distance) < $epsilon) {
+                $timediff = $this->arrayForTime[$i] - $this->arrayForTime[$j];
 
-	public function getBestDistanceFor($time) {
+                $adjtime = $timediff * $distance / $distancediff;
+                if ($adjtime < $besttime) {
+                    $besttime = $adjtime;
+                    //if ($distance==10) echo ($this->arrayForDistance[$i]-$this->arrayForDistance[$j])." ".$j." ".$i." ".Time::toString($besttime)."<br/>";
+                }
+            } else
+                if ($distancediff > $distance  + $epsilon ||
+                    ($i == $distarrsize && $distancediff >= $distance - $epsilon)
+                ) {
+                    $j++;
+                    while ($this->arrayForDistance[$i] - $this->arrayForDistance[$j] >= $distance - $epsilon)
+                        $i--;
+                };
+        }
+
+        return floor($besttime);
+    }
+
+    public function getBestDistanceFor($time) {
 
 		$this->startLoop();
 		$bestdistance=0;
 		$j=0;
-		$epsilon=0.015;
-			
-		for ($i=0; $i<count($this->arrayForTime); $i++) {
-			if (abs(($this->arrayForTime[$i]-$this->arrayForTime[$j])-$time)<$epsilon*$time){ //within km
-				$timediff=$this->arrayForTime[$i]-$this->arrayForTime[$j];
+		$epsilon=10;
+
+        $tmarrsize = count($this->arrayForTime);
+        for ($i=0; $i<$tmarrsize; $i++) {
+            $timediff=$this->arrayForTime[$i]-$this->arrayForTime[$j];
+            if (abs($timediff-$time)<$epsilon){ //within km
 				$distancediff=$this->arrayForDistance[$i]-$this->arrayForDistance[$j];
-				$adjdistance=floor(100*$distancediff*$time/$timediff)/100;
+				$adjdistance=$distancediff*$time/$timediff;
 				if ($adjdistance>$bestdistance){
 					$bestdistance=$adjdistance;
 //			echo ($this->arrayForDistance[$i]-$this->arrayForDistance[$j])." ".$j." ".$i." ".$bestdistance."<br/>";
 				}
 			} else
-			if ($this->arrayForTime[$i]-$this->arrayForTime[$j]>$time*(1+$epsilon))
+			if ($timediff>$time+$epsilon)
 				{
 				 $j++;
-			         while ($this->arrayForTime[$i]-$this->arrayForTime[$j]>=$time*(1-$epsilon))
+			         while ($this->arrayForTime[$i]-$this->arrayForTime[$j]>=$time-$epsilon)
 					$i--;
 				};
 		}
 
-		return $bestdistance;
+		return floor(100*$bestdistance)/100;
 	}
 
 
