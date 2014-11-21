@@ -212,7 +212,7 @@ class ParserTCXSingle extends ParserAbstractSingleXML {
 			$Ignored = false;
 
 			if (count($TP->children()) == 1 || $NoMove || $TooSlow) {
-				if ($NoMove && $ThisBreakInSeconds <= self::$IGNORE_NO_MOVE_UNTIL)
+				if ($ThisBreakInSeconds <= self::$IGNORE_NO_MOVE_UNTIL)
 					$Ignored = true;
 				else
 					$this->PauseInSeconds += $ThisBreakInSeconds;

@@ -69,9 +69,12 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 		$Fieldset->addInfo(
 				'<strong>'.self::getActionLink( __('Simple cleanup'), 'clean=simple').'</strong><br>'.
 				__('Recalculation of cumulative statistics for shoes and maximal values for ATL/CTL/TRIMP.') );
-		$Fieldset->addInfo(
-				'<strong>'.self::getActionLink( __('Complete cleanup'), 'clean=complete').'</strong><br>'.
-				__('Recalculation of TRIMP and VDOT for every activity. Afterwards, the simple cleanup will be done.') );
+        $Fieldset->addInfo(
+            '<strong>'.self::getActionLink( __('Complete cleanup'), 'clean=complete').'</strong><br>'.
+            __('Recalculation of TRIMP and VDOT for every activity. Afterwards, the simple cleanup will be done.') );
+        $Fieldset->addInfo(
+            '<strong>'.self::getActionLink( __('Recalculate statistics'), 'clean=statistics').'</strong><br>'.
+            __('Recalculation of statistics for every activity.') );
 		$Fieldset->addInfo(
 				'<strong>'.self::getActionLink( __('Recalculate elevation').$AndApplyElevationToVDOT, 'clean=elevation').'</strong><br>'.
 				__('Recalculation of elevation for every activity with gps data.<br>'.
@@ -111,8 +114,11 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 			$this->resetShoes();
 		}
 
-		if ($_GET['clean'] == 'elevation')
-			$this->calculateElevation();
+        if ($_GET['clean'] == 'elevation')
+            $this->calculateElevation();
+
+        if ($_GET['clean'] == 'statistics')
+            $this->calculateStatistics();
 
 		JD::recalculateVDOTform();
 		BasicEndurance::recalculateValue();
@@ -152,34 +158,76 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 	/**
 	 * Calculate elevation
 	 */
-	private function calculateElevation() {
-		$DB        = DB::getInstance();
-		$Trainings = $DB->query('SELECT `id`,`arr_alt`,`arr_time`,`distance`,`s` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""')->fetchAll();
+    private function calculateElevation() {
+        $DB        = DB::getInstance();
 
-		foreach ($Trainings as $Training) {
-			$GPS    = new GpsData($Training);
-			$elevationArray = $GPS->calculateElevation(true);
-			$keys   = array('elevation_calculated');
-			$values = array($elevationArray[0]);
+        $Trainings = $DB->query('SELECT `id`,`arr_alt`,`arr_time`, `distance`,`s` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""')->fetchAll();
 
-			if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION) {
-				$keys[] = 'vdot_with_elevation';
-				$values[] = JD::Training2VDOTwithElevation($Training['id'], $Training, $elevationArray[1], $elevationArray[2]);
-			}
 
-			if (Request::param('overwrite') == 'true') {
-				$keys[]   = 'elevation';
-				$values[] = $elevationArray[0];
-			}
+        foreach ($Trainings as $Training) {
+            $GPS    = new GpsData($Training);
+            $elevationArray = $GPS->calculateElevation(true);
+            $keys   = array('elevation_calculated');
+            $values = array($elevationArray[0]);
 
-			$DB->update('training', $Training['id'], $keys, $values);
-		}
+            if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION) {
+                $keys[] = 'vdot_with_elevation';
+                $values[] = JD::Training2VDOTwithElevation($Training['id'], $Training, $elevationArray[1], $elevationArray[2]);
+            }
 
-		$this->SuccessMessages[] = sprintf( __('Elevation values have been recalculated for <strong>%s</strong> activities.'), count($Trainings) );
+            if (Request::param('overwrite') == 'true') {
+                $keys[]   = 'elevation';
+                $values[] = $elevationArray[0];
+            }
 
-		if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION)
-			$this->recalculateVDOTwithElevationWithoutGPSarray();
-	}
+            $DB->update('training', $Training['id'], $keys, $values);
+
+        }
+
+        $this->SuccessMessages[] = sprintf( __('Elevation values have been recalculated for <strong>%s</strong> activities.'), count($Trainings) );
+
+        if (CONF_JD_USE_VDOT_CORRECTION_FOR_ELEVATION)
+            $this->recalculateVDOTwithElevationWithoutGPSarray();
+    }
+
+    private function calculateStatistics() {
+        $DB        = DB::getInstance();
+
+        $DB->exec('DELETE from runalyze_training_hr_zones');
+        $DB->exec('DELETE from runalyze_training_pace_zones');
+
+        $Trainings = $DB->query('SELECT `id`,`arr_time`,arr_heart, arr_dist, `distance`,`s` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""')->fetchAll();
+
+
+        foreach ($Trainings as $Training) {
+            $GPS    = new GpsData($Training);
+
+            $zones=$GPS->getPulseZonesAsFilledArrays();
+
+            foreach ($zones as $zone => $zonedata){
+                $colarr=array('id_training', 'id_zone', 's', 'distance');
+                $valarr=array($Training['id'], $zone-5, $zonedata['time'], $zonedata['distance']);
+                $DB->insert('training_hr_zones',$colarr, $valarr );
+                //Error::getInstance()->addDebug('ZONE'.$zone);
+            }
+
+            $zones=$GPS->getPaceZonesAsFilledArrays();
+
+            foreach ($zones as $zone => $zonedata){
+                $colarr=array('id_training', 'id_zone', 's', 'distance', 'avghr');
+                $valarr=array($Training['id'], $zone, $zonedata['time'], $zonedata['distance'], round($zonedata['hf-sum']/$zonedata['num']));
+                $DB->insert('training_pace_zones',$colarr, $valarr );
+                //Error::getInstance()->addDebug('ZONE'.$zone);
+            }
+
+
+
+        }
+
+        $this->SuccessMessages[] = sprintf( __('Statistics values have been recalculated for <strong>%s</strong> activities.'), count($Trainings) );
+
+    }
+
 
 	/**
 	 * Recalculate VDOT with elevation for trainings without gps array

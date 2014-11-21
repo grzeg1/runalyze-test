@@ -801,8 +801,11 @@ class GpsData {
 		$this->startLoop();
 		$this->setStepSize( round($this->arraySizes / self::$NUM_STEPS_FOR_ZONES) );
 
+        $hfrest=Helper::getHFrest();
+        $hfmax=Helper::getHFmax();
+
 		while ($this->nextStep()) {
-			$zone = ceil(100 * ($this->getAverageHeartrateOfStep() + 1 - Helper::getHFrest()) / (Helper::getHFmax() - Helper::getHFrest())/ 10);
+			$zone = ceil(100 * ($this->getAverageHeartrateOfStep() + 1 - $hfrest) / ($hfmax - $hfrest)/ 10);
 			if($zone<5) $zone=5;			
 
 			if (!isset($Zones[$zone]))
@@ -862,10 +865,10 @@ class GpsData {
 		$this->setStepSize( round($this->arraySizes / self::$NUM_STEPS_FOR_ZONES) );
 
 		while ($this->nextStep()) {
-			$zone = floor($this->getAveragePaceOfStep() / 60);
+			$zone = floor($this->getAveragePaceOfStep() / 30);
 
-			if ($zone >= 10)
-				$zone = 10;
+			if ($zone >= 20)
+				$zone = 20;
 
 			if (!isset($Zones[$zone]))
 				$Zones[$zone] = array('time' => 0, 'distance' => 0, 'hf-sum' => 0, 'num' => 0);
@@ -889,6 +892,14 @@ class GpsData {
         $j = 0;
         $epsilon = 50/1000; //m
         $distarrsize = count($this->arrayForDistance);
+
+
+        $epsilon = 1/1000; //m
+
+        for ($i = 1; $i < $distarrsize; $i++) {
+            $distancediff = $this->arrayForDistance[$i] - $this->arrayForDistance[$i-1];
+            if ($distancediff>$epsilon) $epsilon=$distancediff;
+        }
 
         for ($i = 0; $i < $distarrsize; $i++) {
             $distancediff = $this->arrayForDistance[$i] - $this->arrayForDistance[$j];
@@ -919,6 +930,15 @@ class GpsData {
 		$bestdistance=0;
 		$j=0;
 		$epsilon=10;
+
+        $epsilon = 1; //s
+
+        $distarrsize = count($this->arrayForDistance);
+        for ($i = 1; $i < $distarrsize; $i++) {
+            $timediff=$this->arrayForTime[$i]-$this->arrayForTime[$i-1];
+            if ($timediff>$epsilon) $epsilon=$timediff;
+        }
+
 
         $tmarrsize = count($this->arrayForTime);
         for ($i=0; $i<$tmarrsize; $i++) {

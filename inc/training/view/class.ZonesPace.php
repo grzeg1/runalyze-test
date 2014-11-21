@@ -38,7 +38,7 @@ class ZonesPace extends ZonesAbstract {
 					$Avg = '-';
 
 				$this->Data[] = array(
-					'zone'     => ($min == 0 ? 'schneller' : $min.'-'.($min+1).' '.SportSpeed::$MIN_PER_KM),
+					'zone'     => ($min == 0 ? 'schneller' : SportFactory::getSpeed(1,($min*30), $this->Training->get('sportid')).'-'.SportFactory::getSpeed(1,($min*30+30), $this->Training->get('sportid')).' '.SportSpeed::$MIN_PER_KM),
 					'time'     => $Info['time'],
 					'distance' => $Info['distance'],
 					'average'  => $Avg);

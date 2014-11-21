@@ -90,7 +90,12 @@ class Icon {
 
         $icons=array('Laufen'=>'running', 'Schwimmen'=>'swimming', 'Radfahren'=>'cycling', 'Gymnastik'=>'gymnastics');
 
-        $iconname=$icons[$data['name']];
+        if (isset($icons[$data['name']])){
+            $iconname=$icons[$data['name']];
+        } else
+        {
+            $iconname='gymnastics';
+        }
 
 		return Ajax::tooltip('<i class="sport-icon icon-'.$iconname.'"></i>', $tooltip);
 	}
