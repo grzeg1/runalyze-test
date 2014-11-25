@@ -270,8 +270,8 @@ class RunalyzePluginStat_Analyse extends PluginStat {
 
         $opacity = min(1, round($percent/100, 2)+0.2);
 
-        $circle=' <i class="fa fa-circle" style="width: 30px; text-align:center;  color: #800; opacity:'.$opacity.'; font-size: '.floor($percent*30/100).'px"></i>';
-		echo '<td style="vertical-align: middle;">'.Ajax::tooltip($number, $tooltip).$circle.'</td>';
+        $circle=' <i class="fa fa-circle" style="width: 30px; text-align:center;  color: #800; opacity:'.$opacity.'; font-size: '.floor(sqrt($percent)*30/10).'px"></i>';
+		echo '<td style="vertical-align: middle;">'.Ajax::tooltip($circle, $tooltip).'</td>';
         //$this->getBarFor($percent).
 	}
 
