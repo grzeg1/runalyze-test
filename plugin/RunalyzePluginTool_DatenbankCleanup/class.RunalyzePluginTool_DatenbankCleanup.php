@@ -75,6 +75,9 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
         $Fieldset->addInfo(
             '<strong>'.self::getActionLink( __('Recalculate statistics'), 'clean=statistics').'</strong><br>'.
             __('Recalculation of statistics for every activity.') );
+        $Fieldset->addInfo(
+            '<strong>'.self::getActionLink( __('Recalculate best segments'), 'clean=best_segments').'</strong><br>'.
+            __('Recalculation of best segments for every activity.') );
 		$Fieldset->addInfo(
 				'<strong>'.self::getActionLink( __('Recalculate elevation').$AndApplyElevationToVDOT, 'clean=elevation').'</strong><br>'.
 				__('Recalculation of elevation for every activity with gps data.<br>'.
@@ -119,6 +122,9 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 
         if ($_GET['clean'] == 'statistics')
             $this->calculateStatistics();
+
+        if ($_GET['clean'] == 'best_segments')
+            $this->calculateBestSegments();
 
 		JD::recalculateVDOTform();
 		BasicEndurance::recalculateValue();
@@ -220,14 +226,36 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
                 //Error::getInstance()->addDebug('ZONE'.$zone);
             }
 
-
-
         }
 
         $this->SuccessMessages[] = sprintf( __('Statistics values have been recalculated for <strong>%s</strong> activities.'), count($Trainings) );
 
     }
 
+    private function calculateBestSegments() {
+        $DB        = DB::getInstance();
+
+        $DB->exec('DELETE from runalyze_training_best_segments');
+
+        $Trainings = $DB->query('SELECT `id`,`arr_time`,arr_heart, arr_dist, `distance`,`s` FROM `'.PREFIX.'training` WHERE `arr_alt`!=""')->fetchAll();
+
+
+        foreach ($Trainings as $Training) {
+            set_time_limit(10);
+            $GPS    = new GpsData($Training);
+
+            $Segments = $GPS->getBestSegments();
+
+            foreach ($Segments as $distance => $time) {
+                $colarr=array('id_training', 'distance', 's');
+                $valarr=array($Training['id'], $distance, $time);
+                $DB->insert('training_best_segments',$colarr, $valarr );
+            }
+        }
+
+        $this->SuccessMessages[] = sprintf( __('Best segments have been recalculated for <strong>%s</strong> activities.'), count($Trainings) );
+
+    }
 
 	/**
 	 * Recalculate VDOT with elevation for trainings without gps array

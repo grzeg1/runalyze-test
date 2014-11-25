@@ -32,8 +32,9 @@ class GpsData {
 	 * @var boolean
 	 */
 	private static $USES_ORIGINAL_ELEVATION = false;
+    public $epsilon = 0 ;
 
-	/**
+    /**
 	 * Array with all information for time
 	 * @var array
 	 */
@@ -890,15 +891,19 @@ class GpsData {
         $this->startLoop();
         $besttime = 100000;
         $j = 0;
-        $epsilon = 50/1000; //m
         $distarrsize = count($this->arrayForDistance);
 
+        $epsilon = $this->epsilon;
 
-        $epsilon = 1/1000; //m
+        if ($epsilon == 0) {
 
-        for ($i = 1; $i < $distarrsize; $i++) {
-            $distancediff = $this->arrayForDistance[$i] - $this->arrayForDistance[$i-1];
-            if ($distancediff>$epsilon) $epsilon=$distancediff;
+            $epsilon = 1 / 1000; //m
+
+            for ($i = 1; $i < $distarrsize; $i++) {
+                $distancediff = $this->arrayForDistance[$i] - $this->arrayForDistance[$i - 1];
+                if ($distancediff > $epsilon) $epsilon = $distancediff;
+            }
+            $this->epsilon = $epsilon;
         }
 
         for ($i = 0; $i < $distarrsize; $i++) {

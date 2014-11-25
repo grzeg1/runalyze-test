@@ -9,6 +9,8 @@ create table runalyze_training_hr_zones (accountid int(11) NOT NULL, id_training
 
 create table runalyze_training_pace_zones (accountid int(11) NOT NULL, id_training int(11) NOT NULL, id_zone int, `s` decimal(8,2), distance decimal(8,2), avghr int);
 
+create table runalyze_training_best_segments (accountid int(11) NOT NULL, id_training int(11) NOT NULL, distance decimal(8,2), `s` decimal(8,2));
 
 drop table runalyze_training_hr_zones;
 drop table runalyze_training_pace_zones;
+drop table runalyze_training_best_segments;
