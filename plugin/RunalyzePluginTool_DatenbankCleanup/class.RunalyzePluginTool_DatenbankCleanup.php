@@ -246,6 +246,8 @@ class RunalyzePluginTool_DatenbankCleanup extends PluginTool {
 
             $Segments = $GPS->getBestSegments();
 
+            $Segments[round($Training['distance'],2).'']=$Training['s'];
+
             foreach ($Segments as $distance => $time) {
                 $colarr=array('id_training', 'distance', 's');
                 $valarr=array($Training['id'], $distance, $time);

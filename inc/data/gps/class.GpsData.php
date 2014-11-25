@@ -983,7 +983,10 @@ class GpsData {
         if ($this->getTotalDistance()>21.1*0.985) $segments['21.1'] = $this->getBestTimeFor(21.1);
         if ($this->getTotalDistance()>42.2*0.985) $segments['42.2'] = $this->getBestTimeFor(42.2);
 
-		return $segments;
+
+
+        return $segments;
+
 	}
 
 
