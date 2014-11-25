@@ -228,6 +228,7 @@ abstract class Plugin {
 
 			$Plugin =  new $PLUGINKEY($id);
 			$Plugin->key = $PLUGINKEY;
+            $Plugin->initPlugin();
 
 			return $Plugin;
 		}

@@ -14,7 +14,7 @@ class RunalyzePluginStat_Strecken extends PluginStat {
 	 * Maximum number of routes on routenet
 	 * @var int 
 	 */
-	static public $MAX_ROUTES_ON_NET = 100;
+	static public $MAX_ROUTES_ON_NET = 200;
 
 	/**
 	 * Array with all cities

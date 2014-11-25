@@ -889,7 +889,7 @@ class GpsData {
     {
 
         $this->startLoop();
-        $besttime = 100000;
+        $besttime = 1000000;
         $j = 0;
         $distarrsize = count($this->arrayForDistance);
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * Draw personal bests for a given distance
- * Call:   include Plot.Bestzeit.php
+ * Call:   include Plot.BestTime.php
  */
 
 $Plugin = Plugin::getInstanceFor('RunalyzePluginStat_Wettkampf');
