@@ -211,7 +211,7 @@ class RunalyzePluginStat_BestSegments extends PluginStat {
 		if (in_array($this->config['main_distance']['var'], $this->distances))
 			$display_km = $this->config['main_distance']['var'];
 
-		echo '<div id="bestzeitenFlots" class="flot-changeable" style="position:relative;width:482px;height:192px;">';
+		echo '<div id="bestzeitenFlots" class="flot-changeable" style="position:relative;width:682px;height:192px;">';
 		foreach ($this->distances as $km) {
 			echo Plot::getInnerDivFor('bestzeit'.($km*1000), 680, 190, $km != $display_km);
 			$_GET['km'] = $km;

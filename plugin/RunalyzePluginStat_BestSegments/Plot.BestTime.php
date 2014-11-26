@@ -9,8 +9,8 @@ $Plugin = Plugin::getInstanceFor('RunalyzePluginStat_BestSegments');
 $distance    = !is_numeric($_GET['km']) ? 10 : (float)$_GET['km'];
 $Dates       = array();
 $Results     = array();
-$label       = str_replace('&nbsp;', ' ', sprintf( __('Result over %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
-$titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Result overs %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
+$label       = str_replace('&nbsp;', ' ', sprintf( __('Best %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
+$titleCenter = str_replace('&nbsp;', ' ', sprintf( __('Results over %s'), Running::Km($distance, 1, ($distance <= 3)) ) );
 $timeFormat  = '%M:%S';
 
 $competitions = DB::getInstance()->query('SELECT id,time, runalyze_training_best_segments.s as s FROM `'.PREFIX.'training` JOIN`'.PREFIX.'training_best_segments`
@@ -41,7 +41,7 @@ $Plot->setYAxisTimeFormat($timeFormat, 1);
 
 $Plot->lineWithPoints();
 $Plot->enableTracking();
-$Plot->hideLegend();
+//$Plot->hideLegend();
 $Plot->setTitle($titleCenter);
 
 $Plot->outputJavaScript();
