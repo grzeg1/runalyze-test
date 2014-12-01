@@ -431,8 +431,9 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 		$IgnoredLongjogs = 0;
 		$Longjogs        = DB::getInstance()->query($BasicEndurance->getQuery(0, true))->fetchAll();
 
+
 		foreach ($Longjogs as $Longjog) {
-			if ($Longjog['points'] >= 0.2)
+			if ($Longjog['points'] >= 0.05)
 				$LongjogTable .= '
 						<tr>
 							<td>'.Ajax::trainingLink($Longjog['id'], date('d.m.Y', $Longjog['time'])).'</td>
@@ -452,7 +453,7 @@ class RunalyzePluginPanel_Rechenspiele extends PluginPanel {
 				</tbody>
 			</table>';
 		$LongjogTable .= '<p class="small">'.sprintf( __('* %s &quot;long&quot; jogs do not show up, '.
-														'because they have less than 0.2 points.'), $IgnoredLongjogs).'</p>';
+														'because they have less than 0.1 points.'), $IgnoredLongjogs).'</p>';
 		$LongjogTable .= '<p class="small">'.sprintf( __('* In general, all runs with more than %s are be considered.'),
 														Running::Km($BasicEndurance->getMinimalDistanceForLongjogs())).'</p>';
 

@@ -281,7 +281,8 @@ class BasicEndurance {
 						0
 					) as `points`
 				FROM '.PREFIX.'training
-				WHERE sportid='.CONF_RUNNINGSPORT.' AND time<='.$timestamp.' AND distance>'.$this->MIN_KM_FOR_LONGJOG.' AND time>='.$StartTimeForLongjogs.'';
+				WHERE sportid='.CONF_RUNNINGSPORT.' AND time<='.$timestamp.' AND distance>'.$this->MIN_KM_FOR_LONGJOG.' AND time>='.$StartTimeForLongjogs.
+                ' ORDER BY time';
 		}
 
 		return '
